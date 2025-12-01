@@ -1,46 +1,44 @@
 # Hakoniwa Unreal Drone
 
-このリポジトリは、箱庭ドローンシミュレータのビジュアライズ機能を提供する Unreal Engine プロジェクトです。
-Unreal Engine 5.6 を使用し、WebSocket を介して取得した PDU 情報からドローンの状態を描画します。
+This repository provides visualization functionality for the Hakoniwa Drone Simulator as an Unreal Engine project. It uses Unreal Engine 5.6 to render the drone state based on PDU (Protocol Data Unit) information received via WebSocket.
 
+## Setup
 
-## セットアップ
+1.  Clone this repository. Since it uses submodules, please use the `--recursive` option.
+    ```bash
+    git clone --recursive <repository_url>
+    ```
+    If already cloned, initialize the submodules with:
+    ```bash
+    git submodule update --init --recursive
+    ```
+2.  Install Unreal Engine 5.6 or later.
+3.  Open `HakoniwaDrone.uproject` with the Unreal Editor.
+4.  Build and launch the project as needed.
 
-1. 本リポジトリをクローンします。サブモジュールを利用しているため `--recursive` オプションを付けてください。
-   ```bash
-   git clone --recursive <repository_url>
-   ```
-   既にクローン済みの場合は、次のコマンドでサブモジュールを初期化します。
-   ```bash
-   git submodule update --init --recursive
-   ```
-2. Unreal Engine 5.6 以降をインストールします。
-3. `HakoniwaDrone.uproject` を Unreal Editor で開きます。
-4. 必要に応じてビルドを実行し、プロジェクトを起動します。
+## Available Levels
 
-## 利用可能な Level
+-   `AvatarWeb.umap` — The main level used when controlling the drone via the web.
 
-- `AvatarWeb.umap`  — ドローンを Web 経由で制御する際に使用するメインのレベルです。
+## Key Blueprints
 
-## 主要な Blueprint
+-   `BP_HakoniwaAvatar` — Blueprint representing the drone entity.
+-   `BP_HakoniwaWebClient` — Blueprint handling WebSocket communication and PDU management.
 
-- `BP_HakoniwaAvatar` — ドローン本体を表すブループリント。
-- `BP_HakoniwaWebClient` — WebSocket 通信と PDU 管理を行うブループリント。
+These are located in the `Content/Blueprints` folder.
 
-それぞれ `Content/Blueprints` フォルダ内に配置されています。
+## Configuration
 
-## コンフィグレーション
+The PDU configuration is defined in `Content/Config/webavatar.json`. The Web Client reads this file to set up its message reception.
 
-`Content/Config/webavatar.json` に PDU 設定が記述されています。Web クライアントはこのファイルを読み込み、各種メッセージの受信設定を行います。
+## Code Overview
 
-## コードの概要
+In this project, `AHakoniwaWebClient` receives PDUs via WebSocket and applies the drone's position and rotation to `AHakoniwaAvatar`. `UDronePropellerComponent` rotates each propeller, visualizing the motor RPM.
 
-本プロジェクトでは `AHakoniwaWebClient` が WebSocket 経由で PDU を受信し、`AHakoniwaAvatar` にドローンの位置と回転を反映させます。`UDronePropellerComponent` は各プロペラを回転させ、モーターの回転数を視覚化します。
+PDU retrieval and communication leverage the [hakoniwa-pdu-unreal](https://github.com/davidakpele/hakoniwa-pdu-unreal) plugin. The plugin provides `UPduManager` and `UWebSocketCommunicationService` for reading/writing PDUs and managing connections.
 
-PDU 取得や通信処理には [hakoniwa-pdu-unreal](https://github.com/hakoniwalab/hakoniwa-pdu-unreal) プラグインを使用しています。プラグインは `UPduManager` と `UWebSocketCommunicationService` を提供し、これらを通じて PDU の読み書きや接続管理を行います。
+The `Plugins/HakoniwaPdu` folder is a submodule. After cloning, run `git submodule update --init --recursive` to fetch it.
 
-`Plugins/HakoniwaPdu` フォルダはサブモジュールになっているため、クローン後に `git submodule update --init --recursive` を実行して取得してください。
+## License
 
-## ライセンス
-
-本リポジトリは MIT License の下で公開されています。詳細は `LICENSE` ファイルを参照してください。
+This repository is released under the MIT License. See the `LICENSE` file for details.
