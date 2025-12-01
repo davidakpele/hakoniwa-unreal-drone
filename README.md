@@ -35,7 +35,7 @@ The PDU configuration is defined in `Content/Config/webavatar.json`. The Web Cli
 
 In this project, `AHakoniwaWebClient` receives PDUs via WebSocket and applies the drone's position and rotation to `AHakoniwaAvatar`. `UDronePropellerComponent` rotates each propeller, visualizing the motor RPM.
 
-PDU retrieval and communication leverage the [hakoniwa-pdu-unreal](https://github.com/davidakpele/hakoniwa-pdu-unreal) plugin. The plugin provides `UPduManager` and `UWebSocketCommunicationService` for reading/writing PDUs and managing connections.
+PDU retrieval and communication leverage the [hakoniwa-pdu-unreal](https://github.com/davidakpele/hakoniwa-unreal-drone) plugin. The plugin provides `UPduManager` and `UWebSocketCommunicationService` for reading/writing PDUs and managing connections.
 
 The `Plugins/HakoniwaPdu` folder is a submodule. After cloning, run `git submodule update --init --recursive` to fetch it.
 
